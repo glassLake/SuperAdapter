@@ -11,7 +11,7 @@ import java.util.List;
  * 单一的item
  * Created by Administrator on 2016/4/15 0015.
  */
-public abstract class SuperAdapter extends BaseAdapter implements RefreshableAdapter {
+public abstract class SuperAdapter extends BaseAdapter implements Refreshable {
     List datas;
     Activity context;
     boolean isListViewFling;
@@ -36,6 +36,8 @@ public abstract class SuperAdapter extends BaseAdapter implements RefreshableAda
         return datas.size();
     }
 
+
+
     @Override
     public Object getItem(int position) {
         if (datas == null)
@@ -55,18 +57,18 @@ public abstract class SuperAdapter extends BaseAdapter implements RefreshableAda
     public View getView(int position, View convertView, ViewGroup parent) {
         MyViewHolder holder = null;
         if (convertView == null){
-            holder = initViewHolder();
+            holder = generateNewHolder();
             convertView = holder.rootView;
             convertView.setTag(holder);
         }else {
             holder = (MyViewHolder) convertView.getTag();
         }
-        holder.assingDatasAndEvents(context,datas.get(position));
-        holder.assingDatasAndEvents(context,datas.get(position),position);
+       // holder.assingDatasAndEvents(context,datas.get(position));
+        holder.assingDatasAndEvents(context,datas.get(position),position,position == getCount() -1);
         return convertView;
     }
 
-    protected abstract MyViewHolder initViewHolder();
+    protected abstract MyViewHolder generateNewHolder();
     @Override
     public void refresh(List newData){
         if (newData == null){

@@ -1,6 +1,7 @@
 package com.hss01248.lib;
 
 import android.app.Activity;
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,23 +20,27 @@ public abstract class MyViewHolder<T> {
         ButterKnife.bind(this,rootView);
     }
 
-    protected abstract int setLayoutRes();
+    protected abstract  @LayoutRes  int setLayoutRes();
 
 
-    public void assingDatasAndEvents(Activity context, T bean){
+    /**
+     * 一般情况下，实现这个方法就足够了
+     * @param context
+     * @param bean
+     */
+    public  abstract void assingDatasAndEvents(Activity context, T bean);
 
-    }
 
+    /**
+     * 如果有需要，实现这个方法
+     * @param context
+     * @param bean
+     * @param position
+     * @param isLast
+     */
+    public void assingDatasAndEvents(Activity context, T bean, int position ,boolean isLast){
+        assingDatasAndEvents(context,bean);
 
-
-
-    public void assingDatasAndEvents(Activity context, T bean, int position){
-
-    }
-    public void assingDatasAndEvents(Activity context, T bean, boolean isLast){
-
-    }
-    public void assingDatasAndEvents(Activity context, T bean, boolean isLast, int position ){
 
     }
 

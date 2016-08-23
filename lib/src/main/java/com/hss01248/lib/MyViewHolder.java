@@ -11,9 +11,7 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2016/4/15 0015.
  */
 public abstract class MyViewHolder<T> {
-
     public ViewGroup rootView;
-
 
     public MyViewHolder(Activity context){
         rootView = (ViewGroup) View.inflate(context,setLayoutRes(),null);
@@ -22,7 +20,6 @@ public abstract class MyViewHolder<T> {
 
     protected abstract  @LayoutRes  int setLayoutRes();
 
-
     /**
      * 一般情况下，实现这个方法就足够了
      * @param context
@@ -30,9 +27,8 @@ public abstract class MyViewHolder<T> {
      */
     public  abstract void assingDatasAndEvents(Activity context, T bean);
 
-
     /**
-     * 如果有需要，实现这个方法
+     * 如果有需要，才实现这个方法
      * @param context
      * @param bean
      * @param position
@@ -40,10 +36,5 @@ public abstract class MyViewHolder<T> {
      */
     public void assingDatasAndEvents(Activity context, T bean, int position ,boolean isLast){
         assingDatasAndEvents(context,bean);
-
-
     }
-
-
-
 }

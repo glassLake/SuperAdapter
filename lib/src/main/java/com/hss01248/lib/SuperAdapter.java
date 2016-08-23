@@ -1,6 +1,7 @@
 package com.hss01248.lib;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -25,7 +26,10 @@ public abstract class SuperAdapter extends BaseAdapter implements Refreshable {
     }
 
 
-    public SuperAdapter(List datas, Activity context){
+    public SuperAdapter(@NonNull List datas, Activity context){
+        if (datas == null){
+            throw new RuntimeException("datas cannot be null");
+        }
         this.datas = datas;
         this.context = context;
     }
@@ -63,7 +67,6 @@ public abstract class SuperAdapter extends BaseAdapter implements Refreshable {
         }else {
             holder = (MyViewHolder) convertView.getTag();
         }
-       // holder.assingDatasAndEvents(context,datas.get(position));
         holder.assingDatasAndEvents(context,datas.get(position),position,position == getCount() -1);
         return convertView;
     }

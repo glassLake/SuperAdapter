@@ -18,6 +18,8 @@ public  abstract   class SuperRecyAdapter extends RecyclerView.Adapter<MyRclyVie
 
 
 
+
+
     public SuperRecyAdapter(@NonNull List datas, Activity context){
         this.datas = datas;
         this.context = context;

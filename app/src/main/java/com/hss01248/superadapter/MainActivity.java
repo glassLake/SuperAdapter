@@ -65,11 +65,21 @@ public class MainActivity extends Activity {
 
                 switch (viewType){
                     case TYPE_0:
-                        //View view1 = View.inflate(mActivity,R.layout.holder_demo_list,null);
-                        return new CustomHolder(null);
+                      /* View view1 = View.inflate(mActivity,R.layout.holder_demo_list,null);
+                        return new CustomHolder(view1);*/
+                      long time0 =   System.currentTimeMillis();
+                        MyRclyViewHolder viewHolder = MyRclyViewHolder.getSubInstance(mActivity,CustomHolder.class,R.layout.holder_demo_list);
+                        long time1 = System.currentTimeMillis();
+                        Log.e("00 getSubInstance",time1 - time0+"");
+                        return viewHolder;
                     case TYPE_1:
-                        //View view2 = View.inflate(mActivity,R.layout.holder_demo_list_2,null);
-                        return new CustomHolder2(null);
+
+                        long time2 =   System.currentTimeMillis();
+                        View view2 = View.inflate(mActivity,R.layout.holder_demo_list_2,null);
+                        MyRclyViewHolder holder = new CustomHolder2(view2);
+                        long time3 = System.currentTimeMillis();
+                        Log.e("00 new CustomHolder",time3 - time2+"");
+                        return holder;
                     default:
                         return null;
                 }
@@ -114,7 +124,11 @@ public class MainActivity extends Activity {
 
 
 
-    class CustomHolder extends MyRclyViewHolder {
+    public static  class CustomHolder extends MyRclyViewHolder {
+
+        static {
+            rootView = View.inflate(BaseApplication.mContext,R.layout.holder_demo_list,null);
+        }
 
         @Bind(R.id.tv_text)
         TextView mTvText;
@@ -139,7 +153,11 @@ public class MainActivity extends Activity {
 
     }
 
-    class CustomHolder2 extends MyRclyViewHolder {
+   public static class CustomHolder2 extends MyRclyViewHolder {
+
+        static {
+            rootView = View.inflate(BaseApplication.mContext,R.layout.holder_demo_list_2,null);
+        }
 
         @Bind(R.id.tv_text)
         TextView mTvText;

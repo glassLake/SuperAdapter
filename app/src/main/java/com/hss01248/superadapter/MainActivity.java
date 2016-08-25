@@ -2,11 +2,14 @@ package com.hss01248.superadapter;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
-import com.hss01248.lib.MyViewHolder;
-import com.hss01248.lib.SuperAdapter;
+import com.hss01248.lib.MyRclyViewHolder;
+import com.hss01248.lib.SuperRecyAdapter;
 
 import java.util.ArrayList;
 
@@ -14,17 +17,89 @@ import butterknife.Bind;
 
 public class MainActivity extends Activity {
 
+    RecyclerView mRecyclerView;
+    ArrayList<String> datas ;
+
+    SuperRecyAdapter mAdapter;
+   public static Activity mActivity;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mActivity = this;
+        mRecyclerView = (RecyclerView) findViewById(R.id.lv);
+        datas = new ArrayList<>();
 
-        ListView listView = new ListView(this);
+        datas.add("0");
+        datas.add("two");
+        datas.add("3");
+        datas.add("four");
+        datas.add("5");
+        datas.add("six");
+
+        datas.add("7");
+        datas.add("eight");
+        datas.add("9");
+        datas.add("ten");
+        datas.add("11");
+        datas.add("twelve");
+
+        datas.add("13");
+        datas.add("fourteen");
+        datas.add("15");
+        datas.add("sixteen");
+        datas.add("17");
+        datas.add("eighteen");
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+        mAdapter = new SuperRecyAdapter(datas,this) {
+
+            public static final int TYPE_0 = 0;
+            public static final int TYPE_1 = 1;
+            @Override
+            protected MyRclyViewHolder generateCoustomViewHolder(int viewType) {
+                Log.e("jj",viewType+" viewType");
+
+                switch (viewType){
+                    case TYPE_0:
+                        //View view1 = View.inflate(mActivity,R.layout.holder_demo_list,null);
+                        return new CustomHolder(null);
+                    case TYPE_1:
+                        //View view2 = View.inflate(mActivity,R.layout.holder_demo_list_2,null);
+                        return new CustomHolder2(null);
+                    default:
+                        return null;
+                }
+
+            }
+
+
+            @Override
+            public int getItemViewType(int position) {
+                if (position % 2 == 0){//偶数位
+                    return TYPE_0;
+                }else {//奇数位
+                    return TYPE_1;
+                }
+
+            }
+        };
+
+        mRecyclerView.setAdapter(mAdapter);
+
+
+
+
+
+      /*  ListView listView = new ListView(this);
         ArrayList<String> datas = new ArrayList<>();
 
         SuperAdapter adapter = new SuperAdapter(datas, this) {
             @Override
-            protected MyViewHolder generateNewHolder() {
+            protected MyViewHolder generateNewHolder(int itemViewType) {
                 return new CustomHolder(MainActivity.this);
             }
         };
@@ -32,27 +107,58 @@ public class MainActivity extends Activity {
         listView.setAdapter(adapter);
 
 
-        adapter.add("hhhh");
+        adapter.add("hhhh");*/
     }
 
 
-    class CustomHolder extends MyViewHolder<String> {
+
+
+
+    class CustomHolder extends MyRclyViewHolder {
 
         @Bind(R.id.tv_text)
         TextView mTvText;
 
-        public CustomHolder(Activity context) {
-            super(context);
+        public CustomHolder(View itemView) {
+            super(itemView);
+            Log.e("jj","CustomHolder");
         }
+
 
         @Override
         protected int setLayoutRes() {
+            Log.e("jj","setLayoutRes");
             return R.layout.holder_demo_list;
         }
 
         @Override
-        public void assingDatasAndEvents(Activity context, String bean) {
-            mTvText.setText(bean);
+        public void assignDatasAndEvents(Activity context, Object data) {
+            mTvText.setText(data.toString());
         }
+
+
+    }
+
+    class CustomHolder2 extends MyRclyViewHolder {
+
+        @Bind(R.id.tv_text)
+        TextView mTvText;
+
+        public CustomHolder2(View itemView) {
+            super(itemView);
+        }
+
+
+        @Override
+        protected int setLayoutRes() {
+            return R.layout.holder_demo_list_2;
+        }
+
+        @Override
+        public void assignDatasAndEvents(Activity context, Object data) {
+            mTvText.setText(data.toString());
+        }
+
+
     }
 }

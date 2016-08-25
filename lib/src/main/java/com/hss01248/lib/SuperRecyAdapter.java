@@ -1,10 +1,8 @@
 package com.hss01248.lib;
 
 import android.app.Activity;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -18,26 +16,28 @@ public  abstract   class SuperRecyAdapter extends RecyclerView.Adapter<MyRclyVie
     private List datas;
     private Activity context;
 
-    private int layoutRes;
 
-    public SuperRecyAdapter(@NonNull List datas, Activity context, @LayoutRes int layoutRes){
+
+    public SuperRecyAdapter(@NonNull List datas, Activity context){
         this.datas = datas;
         this.context = context;
-        this.layoutRes = layoutRes;
+
     }
 
 
     @Override
     public MyRclyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewGroup rootView = (ViewGroup) View.inflate(context,layoutRes,null);
-        return generateCoustomViewHolder(rootView);
+        //ViewGroup rootView = (ViewGroup) View.inflate(context,layoutRes,null);
+        return generateCoustomViewHolder(viewType);
     }
 
-    protected abstract MyRclyViewHolder generateCoustomViewHolder(ViewGroup rootView);
+
+
+    protected abstract MyRclyViewHolder generateCoustomViewHolder(int viewType);
 
     @Override
     public void onBindViewHolder(MyRclyViewHolder holder, int position) {
-        holder.assignDatasAndEvents(context,datas.get(position),position);
+        holder.assignDatasAndEvents(context,datas.get(position),position,position == getItemCount() -1,datas,this);
     }
 
     @Override

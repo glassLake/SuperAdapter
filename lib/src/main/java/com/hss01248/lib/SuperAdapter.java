@@ -61,7 +61,7 @@ public abstract class SuperAdapter extends BaseAdapter implements Refreshable {
     public View getView(int position, View convertView, ViewGroup parent) {
         MyViewHolder holder = null;
         if (convertView == null){
-            holder = generateNewHolder();
+            holder = generateNewHolder(getItemViewType(position));
             convertView = holder.rootView;
             convertView.setTag(holder);
         }else {
@@ -71,7 +71,7 @@ public abstract class SuperAdapter extends BaseAdapter implements Refreshable {
         return convertView;
     }
 
-    protected abstract MyViewHolder generateNewHolder();
+    protected abstract MyViewHolder generateNewHolder(int itemViewType);
     @Override
     public void refresh(List newData){
         if (newData == null){

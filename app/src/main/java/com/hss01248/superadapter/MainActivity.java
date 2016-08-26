@@ -110,7 +110,7 @@ public class MainActivity extends Activity {
 
 
 
-    public static  class CustomHolder extends MyRecycleHolder {
+     class CustomHolder extends MyRecycleHolder<String> {
 
         @Bind(R.id.tv_text)
         TextView mTvText;
@@ -119,13 +119,14 @@ public class MainActivity extends Activity {
             super(itemView);
         }
 
+
         @Override
-        public void assignDatasAndEvents(Activity context, Object data) {
+         public void assignDatasAndEvents(Activity context, String data) {
             mTvText.setText(data.toString());
         }
     }
 
-   public static class CustomHolder2 extends MyRecycleHolder {
+   public static class CustomHolder2 extends MyRecycleHolder<String> {
 
 
 
@@ -140,7 +141,7 @@ public class MainActivity extends Activity {
 
 
         @Override
-        public void assignDatasAndEvents(Activity context, Object data) {
+        public void assignDatasAndEvents(Activity context, String data) {
             mTvText.setText(data.toString());
         }
 

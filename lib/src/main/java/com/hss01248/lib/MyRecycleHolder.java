@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/8/22 0022.
  */
-public abstract class MyRecycleHolder extends RecyclerView.ViewHolder   {
+public abstract  class MyRecycleHolder <T> extends RecyclerView.ViewHolder {
 
     public  View rootView;
 
@@ -31,7 +31,7 @@ public abstract class MyRecycleHolder extends RecyclerView.ViewHolder   {
      *  @param datas 整个listview对应的数据
      * @param superRecyAdapter adapter对象引用,可用于触发notifydatesetChanged()方法刷新整个listview,比如更改的单选按钮
      */
-    public  void assignDatasAndEvents(Activity context, Object data, int position,
+    public  void assignDatasAndEvents(Activity context, T data, int position,
                                               boolean isLast, boolean isListViewFling,List datas, SuperRecycleAdapter superRecyAdapter){
         assignDatasAndEvents(context,data);
     }
@@ -41,7 +41,9 @@ public abstract class MyRecycleHolder extends RecyclerView.ViewHolder   {
      * @param context
      * @param data
      */
-    public abstract void assignDatasAndEvents(Activity context, Object data);
+    public    void assignDatasAndEvents(Activity context, T data){
+
+    }
 
 
 }

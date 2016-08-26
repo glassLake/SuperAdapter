@@ -4,12 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hss01248.lib.MyRclyViewHolder;
-import com.hss01248.lib.SuperRecyAdapter;
+import com.hss01248.lib.MyRecycleHolder;
+import com.hss01248.lib.SuperRecycleAdapter;
 
 import java.util.ArrayList;
 
@@ -20,7 +19,7 @@ public class MainActivity extends Activity {
     RecyclerView mRecyclerView;
     ArrayList<String> datas ;
 
-    SuperRecyAdapter mAdapter;
+    SuperRecycleAdapter mAdapter;
    public static Activity mActivity;
 
 
@@ -53,35 +52,22 @@ public class MainActivity extends Activity {
         datas.add("17");
         datas.add("eighteen");
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity,LinearLayoutManager.VERTICAL,false));
 
-        mAdapter = new SuperRecyAdapter(datas,this) {
+        mAdapter = new SuperRecycleAdapter(datas,mActivity) {
 
             public static final int TYPE_0 = 0;
             public static final int TYPE_1 = 1;
             @Override
-            protected MyRclyViewHolder generateCoustomViewHolder(int viewType) {
-                Log.e("jj",viewType+" viewType");
+            protected MyRecycleHolder generateCoustomViewHolder(int viewType) {
 
                 switch (viewType){
                     case TYPE_0:
-                      /* View view1 = View.inflate(mActivity,R.layout.holder_demo_list,null);
-                        return new CustomHolder(view1);*/
-                      long time0 =   System.currentTimeMillis();
-                        MyRclyViewHolder viewHolder = MyRclyViewHolder.getSubInstance(mActivity,CustomHolder.class,R.layout.holder_demo_list);
-                        long time1 = System.currentTimeMillis();
-                        Log.e("00 getSubInstance",time1 - time0+"");
-                        return viewHolder;
+                        return new CustomHolder(inflate(R.layout.holder_demo_list));
                     case TYPE_1:
-
-                        long time2 =   System.currentTimeMillis();
-                        View view2 = View.inflate(mActivity,R.layout.holder_demo_list_2,null);
-                        MyRclyViewHolder holder = new CustomHolder2(view2);
-                        long time3 = System.currentTimeMillis();
-                        Log.e("00 new CustomHolder",time3 - time2+"");
-                        return holder;
+                        return new CustomHolder2(inflate(R.layout.holder_demo_list_2));
                     default:
-                        return null;
+                        return new CustomHolder2(inflate(R.layout.holder_demo_list_2));
                 }
 
             }
@@ -124,40 +110,24 @@ public class MainActivity extends Activity {
 
 
 
-    public static  class CustomHolder extends MyRclyViewHolder {
-
-        static {
-            rootView = View.inflate(BaseApplication.mContext,R.layout.holder_demo_list,null);
-        }
+    public static  class CustomHolder extends MyRecycleHolder {
 
         @Bind(R.id.tv_text)
         TextView mTvText;
 
         public CustomHolder(View itemView) {
             super(itemView);
-            Log.e("jj","CustomHolder");
-        }
-
-
-        @Override
-        protected int setLayoutRes() {
-            Log.e("jj","setLayoutRes");
-            return R.layout.holder_demo_list;
         }
 
         @Override
         public void assignDatasAndEvents(Activity context, Object data) {
             mTvText.setText(data.toString());
         }
-
-
     }
 
-   public static class CustomHolder2 extends MyRclyViewHolder {
+   public static class CustomHolder2 extends MyRecycleHolder {
 
-        static {
-            rootView = View.inflate(BaseApplication.mContext,R.layout.holder_demo_list_2,null);
-        }
+
 
         @Bind(R.id.tv_text)
         TextView mTvText;
@@ -167,10 +137,7 @@ public class MainActivity extends Activity {
         }
 
 
-        @Override
-        protected int setLayoutRes() {
-            return R.layout.holder_demo_list_2;
-        }
+
 
         @Override
         public void assignDatasAndEvents(Activity context, Object data) {

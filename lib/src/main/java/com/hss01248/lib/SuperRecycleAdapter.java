@@ -1,8 +1,10 @@
 package com.hss01248.lib;
 
 import android.app.Activity;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -10,36 +12,49 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/22 0022.
  */
-public  abstract   class SuperRecyAdapter extends RecyclerView.Adapter<MyRclyViewHolder> implements Refreshable {
+public  abstract   class SuperRecycleAdapter extends RecyclerView.Adapter<MyRecycleHolder> implements Refreshable {
 
 
     private List datas;
     private Activity context;
+    boolean isListViewFling;
+
+    public boolean isListViewFling() {
+        return isListViewFling;
+    }
+
+    public void setListViewFling(boolean listViewFling) {
+        isListViewFling = listViewFling;
+    }
 
 
 
-
-
-    public SuperRecyAdapter(@NonNull List datas, Activity context){
+    public SuperRecycleAdapter(@NonNull List datas, Activity context){
         this.datas = datas;
         this.context = context;
 
     }
 
-
-    @Override
-    public MyRclyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //ViewGroup rootView = (ViewGroup) View.inflate(context,layoutRes,null);
-        return generateCoustomViewHolder(viewType);
+    /**
+     * 工具方法
+     * @param layoutRes
+     * @return
+     */
+    public  View inflate(@LayoutRes int layoutRes){
+        return View.inflate(context, layoutRes,null);
     }
 
 
+    @Override
+    public MyRecycleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return generateCoustomViewHolder(viewType);
+    }
 
-    protected abstract MyRclyViewHolder generateCoustomViewHolder(int viewType);
+    protected abstract MyRecycleHolder generateCoustomViewHolder(int viewType);
 
     @Override
-    public void onBindViewHolder(MyRclyViewHolder holder, int position) {
-        holder.assignDatasAndEvents(context,datas.get(position),position,position == getItemCount() -1,datas,this);
+    public void onBindViewHolder(MyRecycleHolder holder, int position) {
+        holder.assignDatasAndEvents(context,datas.get(position),position,position == getItemCount() -1,isListViewFling,datas,this);
     }
 
     @Override

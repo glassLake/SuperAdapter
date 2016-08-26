@@ -17,10 +17,10 @@ import butterknife.Bind;
 public class MainActivity extends Activity {
 
     RecyclerView mRecyclerView;
-    ArrayList<String> datas ;
+    ArrayList<String> datas;
 
     SuperRecycleAdapter mAdapter;
-   public static Activity mActivity;
+    public static Activity mActivity;
 
 
     @Override
@@ -52,22 +52,31 @@ public class MainActivity extends Activity {
         datas.add("17");
         datas.add("eighteen");
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity,LinearLayoutManager.VERTICAL,false));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
 
-        mAdapter = new SuperRecycleAdapter(datas,mActivity) {
+        mAdapter = new SuperRecycleAdapter(datas, mActivity) {
 
             public static final int TYPE_0 = 0;
             public static final int TYPE_1 = 1;
+
             @Override
             protected MyRecycleHolder generateCoustomViewHolder(int viewType) {
 
-                switch (viewType){
+                switch (viewType) {
                     case TYPE_0:
                         return new CustomHolder(inflate(R.layout.holder_demo_list));
                     case TYPE_1:
                         return new CustomHolder2(inflate(R.layout.holder_demo_list_2));
                     default:
-                        return new CustomHolder2(inflate(R.layout.holder_demo_list_2));
+                        return new MyRecycleHolder(inflate(R.layout.holder_demo_list_2)) {//如果是匿名类,就无法复用类以及指定泛型了
+                            private TextView tv_text;
+
+                            @Override
+                            public void assignDatasAndEvents(Activity context, Object data) {
+                                super.assignDatasAndEvents(context, data);
+                                tv_text.setText(data.toString());
+                            }
+                        };
                 }
 
             }
@@ -75,9 +84,9 @@ public class MainActivity extends Activity {
 
             @Override
             public int getItemViewType(int position) {
-                if (position % 2 == 0){//偶数位
+                if (position % 2 == 0) {//偶数位
                     return TYPE_0;
-                }else {//奇数位
+                } else {//奇数位
                     return TYPE_1;
                 }
 
@@ -107,10 +116,7 @@ public class MainActivity extends Activity {
     }
 
 
-
-
-
-     class CustomHolder extends MyRecycleHolder<String> {
+    class CustomHolder extends MyRecycleHolder<String> {
 
         @Bind(R.id.tv_text)
         TextView mTvText;
@@ -121,13 +127,12 @@ public class MainActivity extends Activity {
 
 
         @Override
-         public void assignDatasAndEvents(Activity context, String data) {
+        public void assignDatasAndEvents(Activity context, String data) {
             mTvText.setText(data.toString());
         }
     }
 
-   public static class CustomHolder2 extends MyRecycleHolder<String> {
-
+    public static class CustomHolder2 extends MyRecycleHolder<String> {
 
 
         @Bind(R.id.tv_text)
@@ -136,8 +141,6 @@ public class MainActivity extends Activity {
         public CustomHolder2(View itemView) {
             super(itemView);
         }
-
-
 
 
         @Override

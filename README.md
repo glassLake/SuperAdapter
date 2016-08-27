@@ -44,15 +44,15 @@ holder一般也使用匿名子类.如果在其他页面需要复用,那么可以
 
 ## AbstractListview 的 SuperLvAdapter:
 
-### adapter:
+### adapter:(这里示例代码是只有一种itemtype的情况)
 
-     ListView listView = new ListView(this);
+      ListView listView = new ListView(this);
         ArrayList<String> datas = new ArrayList<>();
 
         SuperLvAdapter adapter = new SuperLvAdapter(datas, this) {
             @Override
-            protected SuperLvHolder generateNewHolder() {
-                return new CustomHolder(MainActivity.this);
+            protected SuperLvHolder generateNewHolder(Activity context,int viewType) {
+                return new CustomHolder(context);
             }
         };
 

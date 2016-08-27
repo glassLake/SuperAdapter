@@ -147,4 +147,11 @@ holder一般也使用匿名子类.如果在其他页面需要复用,那么可以
         public void assignDatasAndEvents(Activity context, String data) {
             mTvText.setText(data);
         }
+        //备用
+        @Override
+        public void assignDatasAndEvents(Activity context, String data, int position, boolean isLast, 
+                                         boolean isListViewFling, List datas, SuperRcvAdapter superRecyAdapter) {
+            super.assignDatasAndEvents(context, data, position, isLast, isListViewFling, datas, superRecyAdapter);
+        }
+
     }

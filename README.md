@@ -1,6 +1,8 @@
 # SuperAdapter
 listview和recycleview的adapter的封装,考虑重用性和可读性,不过度抽象
 
+[![](https://jitpack.io/v/glassLake/SuperAdapter.svg)](https://jitpack.io/#glassLake/SuperAdapter)
+
 [封装的说明] (http://www.jianshu.com/p/994de390378f)
 
 # 使用

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/22 0022.
  */
-public  abstract   class SuperRecycleAdapter extends RecyclerView.Adapter<MyRecycleHolder> implements Refreshable {
+public  abstract   class SuperRcvAdapter extends RecyclerView.Adapter<SuperRcvHolder> implements Refreshable {
 
 
     private List datas;
@@ -29,9 +29,10 @@ public  abstract   class SuperRecycleAdapter extends RecyclerView.Adapter<MyRecy
 
 
 
-    public SuperRecycleAdapter(@NonNull List datas, Activity context){
+    public SuperRcvAdapter(@NonNull List datas, Activity context){
         this.datas = datas;
         this.context = context;
+
 
     }
 
@@ -46,14 +47,14 @@ public  abstract   class SuperRecycleAdapter extends RecyclerView.Adapter<MyRecy
 
 
     @Override
-    public MyRecycleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SuperRcvHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return generateCoustomViewHolder(viewType);
     }
 
-    protected abstract MyRecycleHolder generateCoustomViewHolder(int viewType);
+    protected abstract SuperRcvHolder generateCoustomViewHolder(int viewType);
 
     @Override
-    public void onBindViewHolder(MyRecycleHolder holder, int position) {
+    public void onBindViewHolder(SuperRcvHolder holder, int position) {
         holder.assignDatasAndEvents(context,datas.get(position),position,position == getItemCount() -1,isListViewFling,datas,this);
     }
 
@@ -105,7 +106,7 @@ public  abstract   class SuperRecycleAdapter extends RecyclerView.Adapter<MyRecy
     public void delete(int position) {
         if (datas != null && position < getItemCount()){
             datas.remove(position);
-            notifyDataSetChanged();
+            notifyItemRemoved(position);
         }
     }
 
@@ -113,6 +114,7 @@ public  abstract   class SuperRecycleAdapter extends RecyclerView.Adapter<MyRecy
     public void add(Object object) {
         if (object != null){
             datas.add(object);
+            notifyItemInserted(datas.size() -1);
         }
 
     }
